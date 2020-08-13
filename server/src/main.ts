@@ -86,3 +86,23 @@ app.get("/messages/:mailbox/:id",
     }
   }
 );
+
+// Delete a message.
+app.delete("/messages/:mailbox/:id",
+  async (inRequest: Request, inResponse: Response) => {
+    console.log("DELETE /messages");
+    try {
+      const imapWorker: IMAP.Worker = new IMAP.Worker(serverInfo);
+      await imapWorker.deleteMessage({
+        mailbox : inRequest.params.mailbox,
+        id : parseInt(inRequest.params.id, 10)
+      });
+      console.log("DELETE /messages: Ok");
+      inResponse.send("ok");
+    } catch (inError) {
+      console.log("DELETE /messages: Error", inError);
+      inResponse.send("error");
+    }
+  }
+);
+
