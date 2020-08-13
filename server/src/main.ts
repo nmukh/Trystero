@@ -121,3 +121,19 @@ app.post("/messages",
     }
   }
 );
+
+// List contacts.
+app.get("/contacts",
+  async (inRequest: Request, inResponse: Response) => {
+    console.log("GET /contacts");
+    try {
+      const contactsWorker: Contacts.Worker = new Contacts.Worker();
+      const contacts: IContact[] = await contactsWorker.listContacts();
+      console.log("GET /contacts: Ok", contacts);
+      inResponse.json(contacts);
+    } catch (inError) {
+      console.log("GET /contacts: Error", inError);
+      inResponse.send("error");
+    }
+  }
+);
