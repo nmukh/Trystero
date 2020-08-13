@@ -153,3 +153,19 @@ app.post("/contacts",
     }
   }
 );
+
+// Delete a contact.
+app.delete("/contacts/:id",
+  async (inRequest: Request, inResponse: Response) => {
+    console.log("DELETE /contacts", inRequest.body);
+    try {
+      const contactsWorker: Contacts.Worker = new Contacts.Worker();
+      await contactsWorker.deleteContact(inRequest.params.id);
+      console.log("Contact deleted");
+      inResponse.send("ok");
+    } catch (inError) {
+      console.log(inError);
+      inResponse.send("error");
+    }
+  }
+);
