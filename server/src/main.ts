@@ -67,3 +67,22 @@ app.get("/mailboxes/:mailbox",
     }
   }
 );
+
+//Get a message
+app.get("/messages/:mailbox/:id",
+  async (inRequest: Request, inResponse: Response) => {
+    console.log("GET /messages (3)", inRequest.params.mailbox, inRequest.params.id);
+    try {
+      const imapWorker: IMAP.Worker = new IMAP.Worker(serverInfo);
+      const messageBody: string = await imapWorker.getMessageBody({
+        mailbox : inRequest.params.mailbox,
+        id : parseInt(inRequest.params.id, 10)
+      });
+      console.log("GET /messages (3): Ok", messageBody);
+      inResponse.send(messageBody);
+    } catch (inError) {
+      console.log("GET /messages (3): Error", inError);
+      inResponse.send("error");
+    }
+  }
+);
