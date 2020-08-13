@@ -30,3 +30,22 @@ app.use(function(inRequest: Request, inResponse: Response, inNext: NextFunction)
   inResponse.header("Access-Control-Allow-Headers", "Origin,X-Requested-With,Content-Type,Accept");
   inNext();
 });
+
+
+//REST endpoints
+
+// Get list of mailboxes.
+app.get("/mailboxes",
+  async (inRequest: Request, inResponse: Response) => {
+    console.log("GET /mailboxes (1)");
+    try {
+      const imapWorker: IMAP.Worker = new IMAP.Worker(serverInfo);
+      const mailboxes: IMAP.IMailbox[] = await imapWorker.listMailboxes();
+      console.log("GET /mailboxes (1): Ok", mailboxes);
+      inResponse.json(mailboxes);
+    } catch (inError) {
+      console.log("GET /mailboxes (1): Error", inError);
+      inResponse.send("error");
+    }
+  }
+);
