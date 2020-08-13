@@ -137,3 +137,19 @@ app.get("/contacts",
     }
   }
 );
+
+// Add a contact.
+app.post("/contacts",
+  async (inRequest: Request, inResponse: Response) => {
+    console.log("POST /contacts", inRequest.body);
+    try {
+      const contactsWorker: Contacts.Worker = new Contacts.Worker();
+      const contact: IContact = await contactsWorker.addContact(inRequest.body);
+      console.log("POST /contacts: Ok", contact);
+      inResponse.json(contact);
+    } catch (inError) {
+      console.log("POST /contacts: Error", inError);
+      inResponse.send("error");
+    }
+  }
+);
