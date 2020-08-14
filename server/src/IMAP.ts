@@ -130,6 +130,16 @@ export class Worker {
         await client.close();
         return parsed.text!;
     }
+    //Delete a message
+    public async deleteMessage(inCallOptions: ICallOptions):
+        Promise<any> {
+        const client: any = await this.connectToServer();
+        //Pass mailbox name and unique ID of message to delete
+        await client.deleteMessages(
+            inCallOptions.mailbox, inCallOptions.id, { byUid: true }
+        );
+        await client.close();
+    }
 
 
 }
