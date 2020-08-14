@@ -169,3 +169,8 @@ app.delete("/contacts/:id",
     }
   }
 );
+
+// App listening.
+app.listen(8080, () => {
+    console.log("Pony server open for requests");
+  });
