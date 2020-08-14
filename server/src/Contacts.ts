@@ -34,4 +34,46 @@ export class Worker {
         });
     }
 
+    public addContact(inContact: IContact): Promise<IContact> {
+
+        return new Promise((inResolve, inReject) => {
+            this.db.insert(
+                inContact,
+                (inError: Error | null, inNewDoc: IContact) => {
+                    if (inError) {
+                        console.log("Contacts.Worker.addContact(): Error", inError);
+                        inReject(inError);
+                    } else {
+                        console.log("Contacts.Worker.addContact(): Ok", inNewDoc);
+                        inResolve(inNewDoc);
+                    }
+                }
+            );
+        });
+
+    }
+
+    public deleteContact(inID: string): Promise<string> {
+
+        console.log("Contacts.Worker.deleteContact()", inID);
+    
+        return new Promise((inResolve, inReject) => {
+          this.db.remove(
+            { _id : inID },
+            { },
+            (inError: Error | null, inNumRemoved: number) => {
+              if (inError) {
+                console.log("Contacts.Worker.deleteContact(): Error", inError);
+                inReject(inError);
+              } else {
+                console.log("Contacts.Worker.deleteContact(): Ok", inNumRemoved);
+                inResolve();
+              }
+            }
+          );
+        });
+    
+      }
+
+
 }
