@@ -83,39 +83,53 @@ export class Worker {
     public async listMessages(inCallOptions: ICallOptions): Promise<IMessage[]> {
 
         const client: any = await this.connectToServer();
-    
+
         // Select the mailbox first.  This gives us the message count.
         const mailbox: any = await client.selectMailbox(inCallOptions.mailbox);
         console.log(`IMAP.Worker.listMessages(): Message count = ${mailbox.exists}`);
-    
+
         // If there are no messages, return an empty array.
         if (mailbox.exists === 0) {
-          await client.close();
-          return [ ];
+            await client.close();
+            return [];
         }
-    
+
         // Messages exist, get them.  They are returned in order by uid, so FIFO.
         //1:* is a query for paging mechanism, where * is all.
         const messages: any[] = await client.listMessages(
-          inCallOptions.mailbox,
-          "1:*",
-          [ "uid", "envelope" ]
+            inCallOptions.mailbox,
+            "1:*",
+            ["uid", "envelope"]
         );
-    
+
         await client.close();
-    
+
         // Translate from emailjs-imap-client message objects to app-specific objects.
         const finalMessages: IMessage[] = [];
         messages.forEach((inValue: any) => {
-          finalMessages.push({
-            id : inValue.uid,
-            date: inValue.envelope.date,
-            from: inValue.envelope.from[0].address,
-            subject: inValue.envelope.subject
-          });
+            finalMessages.push({
+                id: inValue.uid,
+                date: inValue.envelope.date,
+                from: inValue.envelope.from[0].address,
+                subject: inValue.envelope.subject
+            });
         });
-    
+
         return finalMessages;
     }
+    //Get plain-text body of single message
+    public async getMessageBody(inCallOptions: ICallOptions):
+        Promise<string> {
+        const client: any = await this.connectToServer();
+        //Because body can be multiple parts, request an array. Specify specific message ID in the call
+        const messages: any[] = await client.listMessages(
+            inCallOptions.mailbox, inCallOptions.id,
+            ["body[]"], { byUid: true }
+        );
+        const parsed: ParsedMail = await simpleParser(messages[0]["body[]"]);
+        await client.close();
+        return parsed.text!;
+    }
+
 
 }
