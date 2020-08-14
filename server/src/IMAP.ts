@@ -54,4 +54,29 @@ export class Worker {
         //client returned to caller
         return client;
     }
+    
+    public async listMailboxes(): Promise<IMailbox[]> {
+
+        const client: any = await this.connectToServer();
+
+        const mailboxes: any = await client.listMailboxes();
+
+        await client.close();
+
+        // Translate from emailjs-imap-client mailbox objects to app-specific objects.  At the same time, flatten the list
+        // of mailboxes via recursion.
+        const finalMailboxes: IMailbox[] = [];
+        const iterateChildren: Function = (inArray: any[]): void => {
+            inArray.forEach((inValue: any) => {
+                finalMailboxes.push({
+                    name: inValue.name,
+                    path: inValue.path
+                });
+                iterateChildren(inValue.children);
+            });
+        };
+        iterateChildren(mailboxes.children);
+
+        return finalMailboxes;
+    }
 }
