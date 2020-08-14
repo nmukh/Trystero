@@ -54,7 +54,7 @@ export class Worker {
         //client returned to caller
         return client;
     }
-    
+    // Return a list of mailboxes
     public async listMailboxes(): Promise<IMailbox[]> {
 
         const client: any = await this.connectToServer();
@@ -79,4 +79,43 @@ export class Worker {
 
         return finalMailboxes;
     }
+    //List information about messages in a named mailbox
+    public async listMessages(inCallOptions: ICallOptions): Promise<IMessage[]> {
+
+        const client: any = await this.connectToServer();
+    
+        // Select the mailbox first.  This gives us the message count.
+        const mailbox: any = await client.selectMailbox(inCallOptions.mailbox);
+        console.log(`IMAP.Worker.listMessages(): Message count = ${mailbox.exists}`);
+    
+        // If there are no messages, return an empty array.
+        if (mailbox.exists === 0) {
+          await client.close();
+          return [ ];
+        }
+    
+        // Messages exist, get them.  They are returned in order by uid, so FIFO.
+        //1:* is a query for paging mechanism, where * is all.
+        const messages: any[] = await client.listMessages(
+          inCallOptions.mailbox,
+          "1:*",
+          [ "uid", "envelope" ]
+        );
+    
+        await client.close();
+    
+        // Translate from emailjs-imap-client message objects to app-specific objects.
+        const finalMessages: IMessage[] = [];
+        messages.forEach((inValue: any) => {
+          finalMessages.push({
+            id : inValue.uid,
+            date: inValue.envelope.date,
+            from: inValue.envelope.from[0].address,
+            subject: inValue.envelope.subject
+          });
+        });
+    
+        return finalMessages;
+    }
+
 }
