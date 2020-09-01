@@ -8,4 +8,6 @@ import BaseLayout from "./components/BaseLayout";
 import * as IMAP from "./IMAP";
 import * as Contacts from "./Contacts";
 
+//Render UI
+const baseComponent = ReactDOM.render(<BaseLayout />, document.body);
 
