@@ -14,3 +14,12 @@ const baseComponent = ReactDOM.render(<BaseLayout />, document.body);
 //Fetch mailbox and contacts
 baseComponent.state.showHidePleaseWait(true);
 
+async function getMailboxes() {
+    const imapWorker: IMAP.Worker = new IMAP.Worker();
+    const mailboxes: IMAP.IMailbox[] = await imapWorker.listMailboxes();
+    mailboxes.forEach((inMailbox) => {
+      baseComponent.state.addMailboxToList(inMailbox);
+    });
+  }
+  
+
