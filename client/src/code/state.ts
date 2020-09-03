@@ -33,9 +33,19 @@ export function createState(inParentComponent) {
         contactEmail: null
 
 
-        showHidePleaseWait : function(inVisible: boolean): void {
-            this.setState({ pleaseWaitVisible : inVisible });
-          }.bind(inParentComponent)
+        showHidePleaseWait: function (inVisible: boolean): void {
+            this.setState({ pleaseWaitVisible: inVisible });
+        }.bind(inParentComponent)
+
+        addMailboxToList: function (inMailbox: IMAP.IMailbox): void {
+            //copy list
+            const cl: IMAP.IMailbox[] = this.state.mailboxes.slice(0);
+            //add new element
+            cl.push(inMailbox);
+            // update list in state
+            this.setState({ mailboxes: cl });
+        }.bind(inParentComponent)
+
 
     }
 };
