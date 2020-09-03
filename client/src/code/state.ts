@@ -32,5 +32,10 @@ export function createState(inParentComponent) {
         contactName: null,
         contactEmail: null
 
+
+        showHidePleaseWait : function(inVisible: boolean): void {
+            this.setState({ pleaseWaitVisible : inVisible });
+          }.bind(inParentComponent)
+
     }
 };
