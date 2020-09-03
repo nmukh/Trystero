@@ -11,3 +11,6 @@ import * as Contacts from "./Contacts";
 //Render UI
 const baseComponent = ReactDOM.render(<BaseLayout />, document.body);
 
+//Fetch mailbox and contacts
+baseComponent.state.showHidePleaseWait(true);
+
