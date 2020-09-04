@@ -39,3 +39,12 @@
   padding-right: 4px;
   overflow: auto;
 }
+
+.contactList {
+  grid-column: 3 / 3;
+  grid-row: 2 / 2;
+  border-left: 1px solid #e0e0e0;
+  padding-top: 4px;
+  padding-left: 4px;
+  overflow: auto;
+}
