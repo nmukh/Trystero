@@ -30,6 +30,7 @@ class BaseLayout extends Component {
                     <DialogContent><DialogContentText>...Contacting server...</DialogContentText></DialogContent>
                 </Dialog>
             <div className="toolbar"><Toolbar state={this.state} /></div>
+            <div className="mailboxList"><MailboxList state={ this.state } /></div>
 
             </div>)
     }
