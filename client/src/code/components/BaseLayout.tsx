@@ -61,3 +61,5 @@ class BaseLayout extends Component {
     );
   }
 }
+
+export default BaseLayout;
