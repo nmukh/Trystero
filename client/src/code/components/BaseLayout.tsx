@@ -24,6 +24,11 @@ class BaseLayout extends Component {
     render() {
         return (
             <div className="appContainer">
+                <Dialog open={this.state.pleaseWaitVisible} disableBackdropClick={true} disableEscapeKeyDown={true}
+                    transitionDuration={0}>
+                    <DialogTitle style={{ textAlign: "center" }}>Please Wait</DialogTitle>
+                    <DialogContent><DialogContentText>...Contacting server...</DialogContentText></DialogContent>
+                </Dialog>
             </div>)
     }
 };
