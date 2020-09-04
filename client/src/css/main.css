@@ -5,4 +5,10 @@
     width : 100vw;
     height : 100vh;
   }
-  
+.toolbar {
+    grid-column : 1 / 4;
+    grid-row : 1 / 1;
+    border-bottom : 1px solid #e0e0e0;
+    padding-left : 4px;
+    padding-top : 8px;
+}
