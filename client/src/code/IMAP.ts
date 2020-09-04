@@ -30,5 +30,13 @@ export class Worker {
         );
         return response.data;
     }
+    public async getMessageBody(inID: string, inMailbox: String):
+        Promise<string> {
+        const response: AxiosResponse = await axios.get(
+            `${config.serverAddress}/messages/${inMailbox}/${inID}`
+        );
+        return response.data;
+    }
+
 
 }
