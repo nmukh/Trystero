@@ -20,8 +20,16 @@
     padding-left : 4px;
     overflow : auto;
   }
-.centerArea {
+/* nesting css grid */
+ .centerArea {
 display : grid;
 grid-template-rows : 200px 1fr;
+}
+
+/* message list can be arbitrarily long, so overflow : auto */
+.messageList {
+border-bottom : 1px solid #e0e0e0;
+grid-row : 1 / 1;
+overflow : auto;
 }
 
