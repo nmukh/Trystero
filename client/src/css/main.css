@@ -1,35 +1,41 @@
 .appContainer {
-    display : grid;
-    grid-template-columns : 150px 1fr 240px;
-    grid-template-rows : 50px 1fr;
-    width : 100vw;
-    height : 100vh;
-  }
+  display: grid;
+  grid-template-columns: 150px 1fr 240px;
+  grid-template-rows: 50px 1fr;
+  width: 100vw;
+  height: 100vh;
+}
 .toolbar {
-    grid-column : 1 / 4;
-    grid-row : 1 / 1;
-    border-bottom : 1px solid #e0e0e0;
-    padding-left : 4px;
-    padding-top : 8px;
+  grid-column: 1 / 4;
+  grid-row: 1 / 1;
+  border-bottom: 1px solid #e0e0e0;
+  padding-left: 4px;
+  padding-top: 8px;
 }
 .mailboxList {
-    grid-column : 1 / 1;
-    grid-row : 2 / 2;
-    border-right : 1px solid #e0e0e0;
-    padding-top : 6px;
-    padding-left : 4px;
-    overflow : auto;
-  }
+  grid-column: 1 / 1;
+  grid-row: 2 / 2;
+  border-right: 1px solid #e0e0e0;
+  padding-top: 6px;
+  padding-left: 4px;
+  overflow: auto;
+}
 /* nesting css grid */
- .centerArea {
-display : grid;
-grid-template-rows : 200px 1fr;
+.centerArea {
+  display: grid;
+  grid-template-rows: 200px 1fr;
 }
 
 /* message list can be arbitrarily long, so overflow : auto */
 .messageList {
-border-bottom : 1px solid #e0e0e0;
-grid-row : 1 / 1;
-overflow : auto;
+  border-bottom: 1px solid #e0e0e0;
+  grid-row: 1 / 1;
+  overflow: auto;
 }
-
+.centerViews {
+  grid-row: 2 / 2;
+  padding-top: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
+  overflow: auto;
+}
