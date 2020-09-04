@@ -20,4 +20,8 @@
     padding-left : 4px;
     overflow : auto;
   }
-  
+.centerArea {
+display : grid;
+grid-template-rows : 200px 1fr;
+}
+
