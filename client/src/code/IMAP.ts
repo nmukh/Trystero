@@ -23,5 +23,12 @@ export class Worker {
             await axios.get(`${config.serverAddress}/mailboxes`);
         return response.data;
     }
+    public async listMessages(inMailbox: string):
+        Promise<IMessage[]> {
+        const response: AxiosResponse = await axios.get(
+            `${config.serverAddress}/mailboxes/${inMailbox}`
+        );
+        return response.data;
+    }
 
 }
