@@ -29,6 +29,8 @@ class BaseLayout extends Component {
                     <DialogTitle style={{ textAlign: "center" }}>Please Wait</DialogTitle>
                     <DialogContent><DialogContentText>...Contacting server...</DialogContentText></DialogContent>
                 </Dialog>
+            <div className="toolbar"><Toolbar state={this.state} /></div>
+
             </div>)
     }
 };
