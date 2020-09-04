@@ -30,12 +30,12 @@ export function createState(inParentComponent) {
         // The details of the contact currently being viewed or added
         contactID: null,
         contactName: null,
-        contactEmail: null
+        contactEmail: null,
 
 
         showHidePleaseWait: function (inVisible: boolean): void {
             this.setState({ pleaseWaitVisible: inVisible });
-        }.bind(inParentComponent)
+        }.bind(inParentComponent),
 
         addMailboxToList: function (inMailbox: IMAP.IMailbox): void {
             //copy list
@@ -44,7 +44,7 @@ export function createState(inParentComponent) {
             cl.push(inMailbox);
             // update list in state
             this.setState({ mailboxes: cl });
-        }.bind(inParentComponent)
+        }.bind(inParentComponent),
 
         addContactToList : function(inContact: Contacts.IContact): void {
             const cl = this.state.contacts.slice(0);
@@ -52,8 +52,6 @@ export function createState(inParentComponent) {
             name : inContact.name, email : inContact.email });
             this.setState({ contacts : cl });
             }.bind(inParentComponent)
-            
-
 
     }
 };
