@@ -96,12 +96,24 @@ export function createState(inParentComponent) {
         contactEmail: "",
       });
     }.bind(inParentComponent),
-    
+
     setCurrentMailbox: function(inPath: String): void {
       //update state
       this.setState({ currentView: "welcome", currentMailbox: inPath });
-     //get list of messages for mailbox 
+      //get list of messages for mailbox
       this.state.getMessages(inPath);
+    }.bind(inParentComponent),
+
+    //inpath is the path to the mailbox to get messages for. 
+    getMessages: async function(inPath: string): Promise<void> {
+      this.state.showHidePleaseWait(true);
+      const imapWorker: IMAP.Worker = new IMAP.Worker();
+      const messages: IMAP.IMessage[] = await imapWorker.listMessages(inPath);
+      this.state.showHidePleaseWait(false);
+      this.state.clearMessages();
+      messages.forEach((inMessage: IMAP.IMessage) => {
+        this.state.addMessageToList(inMessage);
+      });
     }.bind(inParentComponent),
   };
 }
