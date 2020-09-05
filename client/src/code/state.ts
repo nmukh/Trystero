@@ -119,5 +119,18 @@ export function createState(inParentComponent) {
     clearMessages: function(): void {
       this.setState({ messages: [] });
     }.bind(inParentComponent),
+
+
+    //inMessage is a message descriptor object
+    addMessageToList: function(inMessage: IMAP.IMessage): void {
+      const cl = this.state.messages.slice(0);
+      cl.push({
+        id: inMessage.id,
+        date: inMessage.date,
+        from: inMessage.from,
+        subject: inMessage.subject,
+      });
+      this.setState({ messages: cl });
+    }.bind(inParentComponent),
   };
 }
