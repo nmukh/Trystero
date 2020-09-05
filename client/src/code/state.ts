@@ -104,7 +104,7 @@ export function createState(inParentComponent) {
       this.state.getMessages(inPath);
     }.bind(inParentComponent),
 
-    //inpath is the path to the mailbox to get messages for. 
+    //inpath is the path to the mailbox to get messages for.
     getMessages: async function(inPath: string): Promise<void> {
       this.state.showHidePleaseWait(true);
       const imapWorker: IMAP.Worker = new IMAP.Worker();
@@ -114,6 +114,10 @@ export function createState(inParentComponent) {
       messages.forEach((inMessage: IMAP.IMessage) => {
         this.state.addMessageToList(inMessage);
       });
+    }.bind(inParentComponent),
+
+    clearMessages: function(): void {
+      this.setState({ messages: [] });
     }.bind(inParentComponent),
   };
 }
