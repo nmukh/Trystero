@@ -120,7 +120,6 @@ export function createState(inParentComponent) {
       this.setState({ messages: [] });
     }.bind(inParentComponent),
 
-
     //inMessage is a message descriptor object
     addMessageToList: function(inMessage: IMAP.IMessage): void {
       const cl = this.state.messages.slice(0);
@@ -131,6 +130,15 @@ export function createState(inParentComponent) {
         subject: inMessage.subject,
       });
       this.setState({ messages: cl });
+    }.bind(inParentComponent),
+
+    showContact: function(inID: string, inName: string, inEmail: string): void {
+      this.setState({
+        currentView: "contact",
+        contactID: inID,
+        contactName: inName,
+        contactEmail: inEmail,
+      });
     }.bind(inParentComponent),
   };
 }
