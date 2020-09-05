@@ -96,5 +96,12 @@ export function createState(inParentComponent) {
         contactEmail: "",
       });
     }.bind(inParentComponent),
+    
+    setCurrentMailbox: function(inPath: String): void {
+      //update state
+      this.setState({ currentView: "welcome", currentMailbox: inPath });
+     //get list of messages for mailbox 
+      this.state.getMessages(inPath);
+    }.bind(inParentComponent),
   };
 }
