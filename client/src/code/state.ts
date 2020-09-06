@@ -209,5 +209,21 @@ export function createState(inParentComponent) {
         messageBody: mb,
       });
     }.bind(inParentComponent),
+    deleteMessage: async function(): Promise<void> {
+      //delete from server
+      this.state.showHidePleaseWait(true);
+      const imapWorker: IMAP.Worker = new IMAP.Worker();
+      await imapWorker.deleteMessage(
+        this.state.messageID,
+        this.state.currentMailbox
+      );
+      this.state.showHidePleaseWait(false);
+      //remove from list
+      const cl = this.state.messages.filter(
+        (inElement) => inElement.id != this.state.messageID
+      );
+      //update the state
+      this.setState({ messages: cl, currentView: "welcome" });
+    }.bind(inParentComponent),
   };
 }
