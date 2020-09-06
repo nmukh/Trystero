@@ -189,5 +189,25 @@ export function createState(inParentComponent) {
         contactEmail: "",
       });
     }.bind(inParentComponent),
+    showMessage: async function(inMessage: IMAP.IMessage): Promise<void> {
+      //get message body
+      this.state.showHidePleaseWait(true);
+      const imapWorker: IMAP.Worker = new IMAP.Worker();
+      const mb: String = await imapWorker.getMessageBody(
+        inMessage.id,
+        this.state.currentMailbox
+      );
+      this.state.showHidePleaseWait(false);
+      //update state
+      this.setState({
+        currentView: "message",
+        messageID: inMessage.id,
+        messageDate: inMessage.date,
+        messageFrom: inMessage.from,
+        messageTo: "",
+        messageSubject: inMessage.subject,
+        messageBody: mb,
+      });
+    }.bind(inParentComponent),
   };
 }
