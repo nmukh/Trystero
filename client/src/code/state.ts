@@ -171,5 +171,23 @@ export function createState(inParentComponent) {
         contactEmail: "",
       });
     }.bind(inParentComponent),
+    deleteContact: async function(): Promise<void> {
+      //delete from server
+      this.state.showHidePleaseWait(true);
+      const contactsWorker: Contacts.Worker = new Contacts.Worker();
+      await contactsWorker.deleteContact(this.state.contactID);
+      this.state.showHidePleaseWait(false);
+      //remove from list
+      const cl = this.state.contacts.filter(
+        (inElement) => inElement._id != this.state.contactID
+      );
+      //update state
+      this.setState({
+        contacts: cl,
+        contactID: null,
+        contactName: "",
+        contactEmail: "",
+      });
+    }.bind(inParentComponent),
   };
 }
