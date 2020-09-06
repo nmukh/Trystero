@@ -140,5 +140,15 @@ export function createState(inParentComponent) {
         contactEmail: inEmail,
       });
     }.bind(inParentComponent),
+    fieldChangeHandler: function(inEvent: any): void {
+      //enforce max length for contact name
+      if (
+        inEvent.target.id === "contactName" &&
+        inEvent.target.value.length > 16
+      ) {
+        return;
+      }
+      this.setState({ [inEvent.target.id]: inEvent.target.value });
+    }.bind(inParentComponent),
   };
 }
