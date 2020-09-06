@@ -150,5 +150,26 @@ export function createState(inParentComponent) {
       }
       this.setState({ [inEvent.target.id]: inEvent.target.value });
     }.bind(inParentComponent),
+    saveContact: async function(): Promise<void> {
+      //copy list
+      const cl = this.state.contacts.slice(0);
+      //save to server
+      this.state.showHidePleaseWait(true);
+      const contactsWorker: Contacts.Worker = new Contacts.Worker();
+      const contact: Contacts.IContact = await contactsWorker.addContact({
+        name: this.state.contactName,
+        email: this.state.contactEmail,
+      });
+      this.state.showHidePleaseWait(false);
+      //add to list
+      cl.push(contact);
+      //update state
+      this.setState({
+        contacts: cl,
+        contactID: null,
+        contactName: "",
+        contactEmail: "",
+      });
+    }.bind(inParentComponent),
   };
 }
